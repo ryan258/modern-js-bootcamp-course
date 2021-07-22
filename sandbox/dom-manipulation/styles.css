@@ -1,0 +1,33 @@
+html {
+  font-size: 62.5%;
+}
+h1 {
+  color: green;
+  font-size: 2rem;
+}
+
+.special {
+  color: teal;
+  font-size: 3rem;
+  border: 1px solid teal;
+}
+
+#the-hamster {
+  width: 250px;
+}
+
+input[type='password'] {
+  height: 50px;
+  width: 100px;
+}
+
+.todo {
+  color: rebeccapurple;
+  font-size: 30px;
+}
+
+.done {
+  color: gray;
+  text-decoration: line-through;
+  opacity: 0.5;
+}
