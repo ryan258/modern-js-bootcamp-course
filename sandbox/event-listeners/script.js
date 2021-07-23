@@ -1,6 +1,6 @@
 //! /////////////////
 //! Key Events:
-// - keypress,
+// - keypress - there must be a character
 // - keyup
 // - keydown - counts shift and more than character keys too
 
