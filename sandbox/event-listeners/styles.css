@@ -1,0 +1,23 @@
+#impossibleButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+h2#colorHeader {
+  padding: 1rem;
+  text-align: center;
+}
+
+#boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  /* float: left; */
+}
