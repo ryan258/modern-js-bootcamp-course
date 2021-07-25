@@ -1,7 +1,49 @@
 //! /////////////////
+//! Input Change Events:
+// - with change events, only blurring will register the change and not every individual keystroke
+// - make things equal to the input as the values change and not wait for a submit event
+// - input will register a change on every key stroke
+const form = document.querySelector('#signup-form')
+
+const creditCardInput = document.querySelector('#cc')
+const termsCheckbox = document.querySelector('#terms')
+const critterSelect = document.querySelector('#critter')
+
+const formData = {}
+// give the input fields names
+for (let input of [creditCardInput, termsCheckbox, critterSelect]) {
+  input.addEventListener('change', ({ target }) => {
+    // console.log(e.target.name)
+    const { name, type, value, checked } = target
+    formData[name] = type === 'checkbox' ? checked : value
+    console.log(formData)
+  })
+}
+
+// TODO: Condense these into smaller code ^^^ up above
+/*creditCardInput.addEventListener('input', (e) => {
+  console.log('cc changed!', e.target.value)
+  formData['cc'] = e.target.value
+  console.log(formData)
+})
+
+critterSelect.addEventListener('input', (e) => {
+  console.log('critter has changed!', e.target.value)
+  formData['critter'] = e.target.value
+  console.log(formData)
+})
+
+termsCheckbox.addEventListener('input', (e) => {
+  console.log('checking', e.target.checked)
+  formData['agreedToTAC'] = e.target.value
+  console.log(formData)
+})
+*/
+
+//! /////////////////
 //! Form Events:
 
-const form = document.querySelector('#signup-form')
+/*const form = document.querySelector('#signup-form')
 
 const creditCardInput = document.querySelector('#cc')
 const termsCheckbox = document.querySelector('#terms')
@@ -13,6 +55,7 @@ form.addEventListener('submit', (e) => {
   console.log('critter', critterSelect.value)
   e.preventDefault()
 })
+*/
 
 //! /////////////////
 //! Key Events:
