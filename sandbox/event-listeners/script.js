@@ -1,4 +1,20 @@
 //! /////////////////
+//! Form Events:
+
+const form = document.querySelector('#signup-form')
+
+const creditCardInput = document.querySelector('#cc')
+const termsCheckbox = document.querySelector('#terms')
+const critterSelect = document.querySelector('#critter')
+
+form.addEventListener('submit', (e) => {
+  console.log('cc:', creditCardInput.value)
+  console.log('terms:', termsCheckbox.checked)
+  console.log('critter', critterSelect.value)
+  e.preventDefault()
+})
+
+//! /////////////////
 //! Key Events:
 // - keypress - there must be a character
 // - keyup
@@ -11,7 +27,7 @@
 // Key Up: B
 // Key Up: Shift
 
-const input = document.getElementById('username')
+/*const input = document.getElementById('username')
 
 input.addEventListener('keypress', function (e) {
   console.log('Key Press:', e.key)
@@ -22,6 +38,7 @@ input.addEventListener('keyup', function (e) {
 input.addEventListener('keydown', function (e) {
   console.log('Key Down:', e.key)
 })
+*/
 
 //! /////////////////
 //! The Event Object
