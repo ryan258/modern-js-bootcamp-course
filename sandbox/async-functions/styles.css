@@ -1,0 +1,11 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  background-color: hsl(43, 74%, 49%);
+}
+h1 {
+  /* color: hsl(13, 74%, 49%); */
+  color: black;
+  font-size: 2rem;
+}
