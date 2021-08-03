@@ -30,16 +30,20 @@ class Timer {
   }
 
   tick = () => {
-    // count timer down
-    // console.log('tick')
-    // const timeRemaining = parseFloat(this.durationInput.value)
-    //!- we can use a getter instead
-    // const timeRemaining = this.timeRemaining // automatically invokes bc it's a getter, which hides away the complexity
-    // this.durationInput.value = timeRemaining - 1
-    //!- here we'll use the setter instead
-    // this.timeRemaining = timeRemaining - 1
-    //! BUT FINALLY THE GETTER AND SETTER CAN CONDENSE THIS DOWN TOOL
-    this.timeRemaining = this.timeRemaining - 1 // (setter/update) = (getter/retrieve)
+    if (this.timeRemaining <= 0) {
+      this.pause()
+    } else {
+      // count timer down
+      // console.log('tick')
+      // const timeRemaining = parseFloat(this.durationInput.value)
+      //!- we can use a getter instead
+      // const timeRemaining = this.timeRemaining // automatically invokes bc it's a getter, which hides away the complexity
+      // this.durationInput.value = timeRemaining - 1
+      //!- here we'll use the setter instead
+      // this.timeRemaining = timeRemaining - 1
+      //! BUT FINALLY THE GETTER AND SETTER CAN CONDENSE THIS DOWN TOOL
+      this.timeRemaining = this.timeRemaining - 1 // (setter/update) = (getter/retrieve)
+    }
   }
 
   //! getters and setters
