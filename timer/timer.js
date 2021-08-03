@@ -26,12 +26,12 @@ class Timer {
   start = () => {
     //! call the callback if it exists
     if (this.onStart) {
-      this.onStart()
+      this.onStart(this.timeRemaining)
     }
     // console.log('time to start the timer! 🙌')
     // console.log(this) // this points at the button that was clicked
     this.tick()
-    this.interval = setInterval(this.tick, 1000) // run the tick method every 1 second, but it won't start until the first delay passes, but we want the timer to start working right away. So we'll call this.tick manually right before
+    this.interval = setInterval(this.tick, 20) // run the tick method every 1 second, but it won't start until the first delay passes, but we want the timer to start working right away. So we'll call this.tick manually right before
     // - when we call setInterval we get back an integerID that represents the running timer/running interval that will continue running the function again and again.
   }
 
@@ -56,9 +56,9 @@ class Timer {
       //!- here we'll use the setter instead
       // this.timeRemaining = timeRemaining - 1
       //! BUT FINALLY THE GETTER AND SETTER CAN CONDENSE THIS DOWN TOOL
-      this.timeRemaining = this.timeRemaining - 1 // (setter/update) = (getter/retrieve)
+      this.timeRemaining = this.timeRemaining - 0.02 // (setter/update) = (getter/retrieve)
       if (this.onTick) {
-        this.onTick()
+        this.onTick(this.timeRemaining)
       }
     }
   }
@@ -69,6 +69,6 @@ class Timer {
     return parseFloat(this.durationInput.value)
   }
   set timeRemaining(time) {
-    this.durationInput.value = time
+    this.durationInput.value = time.toFixed(2)
   }
 }
