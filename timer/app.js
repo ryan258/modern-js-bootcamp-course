@@ -1,11 +1,18 @@
 //! we always want 'this' to result in an instance of the class
 
 class Timer {
-  constructor(durationInput, startButton, pauseButton) {
+  constructor(durationInput, startButton, pauseButton, callbacks) {
     // make them into variables so we can refer to them from other methods inside of our class
     this.durationInput = durationInput
     this.startButton = startButton
     this.pauseButton = pauseButton
+    if (callbacks) {
+      // whenever we start up our timer we'll run onStart()
+      // here we've made a reference
+      this.onStart = callbacks.onStart
+      this.onTick = callbacks.onTick
+      this.onComplete = callbacks.onComplete
+    }
     // so we can set up event handlers from our constructor
     this.startButton.addEventListener('click', this.start)
     // older projects will handle their this correction w/ .bind(this)
@@ -17,6 +24,10 @@ class Timer {
   // start() {
   // goal of tick methods is to start up the tick method and call it in so many intervals.
   start = () => {
+    //! call the callback if it exists
+    if (this.onStart) {
+      this.onStart()
+    }
     // console.log('time to start the timer! 🙌')
     // console.log(this) // this points at the button that was clicked
     this.tick()
@@ -32,6 +43,9 @@ class Timer {
   tick = () => {
     if (this.timeRemaining <= 0) {
       this.pause()
+      if (this.onComplete) {
+        this.onComplete()
+      }
     } else {
       // count timer down
       // console.log('tick')
@@ -43,6 +57,9 @@ class Timer {
       // this.timeRemaining = timeRemaining - 1
       //! BUT FINALLY THE GETTER AND SETTER CAN CONDENSE THIS DOWN TOOL
       this.timeRemaining = this.timeRemaining - 1 // (setter/update) = (getter/retrieve)
+      if (this.onTick) {
+        this.onTick()
+      }
     }
   }
 
@@ -60,5 +77,16 @@ const durationInput = document.getElementById('duration')
 const startButton = document.getElementById('start')
 const pauseButton = document.getElementById('pause')
 
-const timer = new Timer(durationInput, startButton, pauseButton)
+const timer = new Timer(durationInput, startButton, pauseButton, {
+  //! the events we want to emit
+  onStart() {
+    console.log('timer started')
+  },
+  onTick() {
+    console.log('tick!')
+  },
+  onComplete() {
+    console.log('times up!')
+  }
+})
 // when ^^^ this new Timer is made the event listener will be automatically set up for us
