@@ -329,7 +329,7 @@ class Cat extends Pet {
   //   this.age = age
   // }
 
-  //! using super
+  //! using super - super is a reference to the super class! (what we're extending from)
   constructor(name, age, livesLeft = 9) {
     super(name, age) //! brings in the parent properties, so you don't have to manually duplicate all the same stuff again
     this.livesLeft = livesLeft // add the new prop
