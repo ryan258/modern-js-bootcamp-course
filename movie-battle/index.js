@@ -18,25 +18,56 @@ const fetchData = async (searchTerm) => {
   return response.data.Search
 }
 
+const root = document.querySelector('.autocomplete')
+root.innerHTML = `
+  <label><b>Search for a Movie</b></label>
+  <input type="text" class="input" />
+  <div class="dropdown">
+    <div class="dropdown-menu">
+      <div class="dropdown-content results"></div>
+    </div>
+  </div>
+  <div id="target"></div>
+`
+
 const input = document.querySelector('input')
+const dropdown = document.querySelector('.dropdown')
+const resultsWrapper = document.querySelector('.results')
 
 const onInput = async (e) => {
   const movies = await fetchData(e.target.value)
   // console.log(movies)
+  if (!movies.length) {
+    dropdown.classList.remove('is-active')
+    return // then return out of this function so nothing else returns
+  }
+  // v empty out existing results to make way for new results
+  resultsWrapper.innerHTML = ''
+
+  dropdown.classList.add('is-active')
   // v this could also be a normal for loop, while loop, .forEach(), .map() as well, but for..of loops are nice and readable
   for (let movie of movies) {
     //! 1) Create it
-    const div = document.createElement('div')
+    const option = document.createElement('a')
+    const imgSrc = movie.Post === 'N/A' ? '' : movie.Poster
+    option.classList.add('dropdown-item')
     //! 2) Fill it
-    div.innerHTML = `
-      <img src="${movie.Poster}" />
-      <h1>${movie.Title}</h1>
+    option.innerHTML = `
+      <img src="${imgSrc}" />
+      ${movie.Title}
     `
     //! 3) Insert it
-    document.querySelector('#target').appendChild(div)
+    resultsWrapper.appendChild(option)
   }
 }
 
 // input event is triggered whenever there is a change in the input
 // apply rate limiter that limits invocation to once a second
 input.addEventListener('input', debounce(onInput, 500))
+
+document.addEventListener('click', (e) => {
+  // console.log(e.target)
+  if (!root.contains(event.target)) {
+    dropdown.classList.remove('is-active')
+  }
+})
