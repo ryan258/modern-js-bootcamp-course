@@ -1,6 +1,6 @@
 // a function that can be called multiple different times to create different instances
 // config will have the specifics of how this particular instance should work
-const createAutoComplete = ({ root }) => {
+const createAutoComplete = ({ root, renderOption }) => {
   root.innerHTML = `
     <label><b>Search for a Movie</b></label>
     <input type="text" class="input" />
@@ -31,13 +31,9 @@ const createAutoComplete = ({ root }) => {
     for (let movie of movies) {
       //! 1) Create it
       const option = document.createElement('a')
-      const imgSrc = movie.Post === 'N/A' ? '' : movie.Poster
       option.classList.add('dropdown-item')
       //! 2) Fill it
-      option.innerHTML = `
-        <img src="${imgSrc}" />
-        ${movie.Title}
-      `
+      option.innerHTML = renderOption(movie)
       //! 3) Handle option click
       option.addEventListener('click', () => {
         // close the dropdown
