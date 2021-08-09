@@ -56,7 +56,16 @@ const onInput = async (e) => {
       <img src="${imgSrc}" />
       ${movie.Title}
     `
-    //! 3) Insert it
+    //! 3) Handle option click
+    option.addEventListener('click', () => {
+      // close the dropdown
+      dropdown.classList.remove('is-active')
+      // to update the value of the input
+      input.value = movie.Title
+      // grab individual movie data
+      onMovieSelect(movie)
+    })
+    //! 4) Insert it
     resultsWrapper.appendChild(option)
   }
 }
@@ -71,3 +80,15 @@ document.addEventListener('click', (e) => {
     dropdown.classList.remove('is-active')
   }
 })
+
+// grab individual movie data on selection
+const onMovieSelect = async (movie) => {
+  // console.log(movie)
+  const response = await axios.get('http://www.omdbapi.com/', {
+    params: {
+      apikey: '450ca57c',
+      i: movie.imdbID
+    }
+  })
+  console.log(response.data)
+}
