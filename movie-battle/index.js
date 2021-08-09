@@ -8,13 +8,28 @@ const fetchData = async (searchTerm) => {
     }
   })
 
-  console.log(response.data)
+  // console.log(response.data)
+  // return only the data that we care about
+  return response.data.Search
 }
 
 const input = document.querySelector('input')
 
-const onInput = (e) => {
-  fetchData(e.target.value)
+const onInput = async (e) => {
+  const movies = await fetchData(e.target.value)
+  // console.log(movies)
+  // v this could also be a normal for loop, while loop, .forEach(), .map() as well, but for..of loops are nice and readable
+  for (let movie of movies) {
+    //! 1) Create it
+    const div = document.createElement('div')
+    //! 2) Fill it
+    div.innerHTML = `
+      <img src="${movie.Poster}" />
+      <h1>${movie.Title}</h1>
+    `
+    //! 3) Insert it
+    document.querySelector('#target').appendChild(div)
+  }
 }
 
 // input event is triggered whenever there is a change in the input
