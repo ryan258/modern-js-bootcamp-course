@@ -1,8 +1,8 @@
 // a function that can be called multiple different times to create different instances
 // config will have the specifics of how this particular instance should work
-const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) => {
+const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fetchData }) => {
   root.innerHTML = `
-    <label><b>Search for a Movie</b></label>
+    <label><b>Search</b></label>
     <input type="text" class="input" />
     <div class="dropdown">
       <div class="dropdown-menu">
@@ -17,9 +17,9 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) 
   const resultsWrapper = root.querySelector('.results')
 
   const onInput = async (e) => {
-    const movies = await fetchData(e.target.value)
-    // console.log(movies)
-    if (!movies.length) {
+    const items = await fetchData(e.target.value)
+    // console.log(items)
+    if (!items.length) {
       dropdown.classList.remove('is-active')
       return // then return out of this function so nothing else returns
     }
@@ -28,20 +28,20 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) 
 
     dropdown.classList.add('is-active')
     // v this could also be a normal for loop, while loop, .forEach(), .map() as well, but for..of loops are nice and readable
-    for (let movie of movies) {
+    for (let item of items) {
       //! 1) Create it
       const option = document.createElement('a')
       option.classList.add('dropdown-item')
       //! 2) Fill it
-      option.innerHTML = renderOption(movie)
+      option.innerHTML = renderOption(item)
       //! 3) Handle option click
       option.addEventListener('click', () => {
         // close the dropdown
         dropdown.classList.remove('is-active')
         // to update the value of the input
-        input.value = inputValue(movie)
-        // grab individual movie data
-        onOptionSelect(movie)
+        input.value = inputValue(item)
+        // grab individual item data
+        onOptionSelect(item)
       })
       //! 4) Insert it
       resultsWrapper.appendChild(option)

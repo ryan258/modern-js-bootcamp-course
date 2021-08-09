@@ -1,23 +1,3 @@
-const fetchData = async (searchTerm) => {
-  const response = await axios.get('http://www.omdbapi.com/', {
-    params: {
-      apikey: '450ca57c',
-      // s: 'avengers' // for a search operation
-      s: searchTerm
-      // i: 'tt0848228' // for a look up operation, for the exact movie
-    }
-  })
-
-  // if not search turns up nothing, suppress error console message
-  if (response.data.Error) {
-    return []
-  }
-
-  // console.log(response.data)
-  // return only the data that we care about
-  return response.data.Search
-}
-
 createAutoComplete({
   root: document.querySelector('.autocomplete'),
   renderOption(movie) {
@@ -34,6 +14,23 @@ createAutoComplete({
   inputValue(movie) {
     // return whatever value should show up inside of the input
     return movie.Title
+  },
+  async fetchData(searchTerm) {
+    const response = await axios.get('http://www.omdbapi.com/', {
+      params: {
+        apikey: '450ca57c',
+        s: searchTerm
+      }
+    })
+
+    // if not search turns up nothing, suppress error console message
+    if (response.data.Error) {
+      return []
+    }
+
+    // console.log(response.data)
+    // return only the data that we care about
+    return response.data.Search
   }
 })
 
