@@ -8,6 +8,11 @@ const fetchData = async (searchTerm) => {
     }
   })
 
+  // if not search turns up nothing, suppress error console message
+  if (response.data.Error) {
+    return []
+  }
+
   // console.log(response.data)
   // return only the data that we care about
   return response.data.Search
