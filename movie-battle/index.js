@@ -6,10 +6,6 @@ const autoCompleteConfig = {
       ${movie.Title} (${movie.Year})
     `
   },
-  onOptionSelect(movie) {
-    // grab individual movie data
-    onMovieSelect(movie)
-  },
   inputValue(movie) {
     // return whatever value should show up inside of the input
     return movie.Title
@@ -35,16 +31,24 @@ const autoCompleteConfig = {
 
 createAutoComplete({
   ...autoCompleteConfig,
-  root: document.querySelector('#left-autocomplete')
+  root: document.querySelector('#left-autocomplete'),
+  onOptionSelect(movie) {
+    document.querySelector('.tutorial').classList.add('is-hidden')
+    onMovieSelect(movie, document.querySelector('#left-summary'))
+  }
 })
 
 createAutoComplete({
   ...autoCompleteConfig,
-  root: document.querySelector('#right-autocomplete')
+  root: document.querySelector('#right-autocomplete'),
+  onOptionSelect(movie) {
+    document.querySelector('.tutorial').classList.add('is-hidden')
+    onMovieSelect(movie, document.querySelector('#right-summary'))
+  }
 })
 
 // grab individual movie data on selection
-const onMovieSelect = async (movie) => {
+const onMovieSelect = async (movie, summaryElement) => {
   // console.log(movie)
   const response = await axios.get('http://www.omdbapi.com/', {
     params: {
@@ -53,7 +57,7 @@ const onMovieSelect = async (movie) => {
     }
   })
   // console.log(response.data)
-  document.querySelector('#summary').innerHTML = movieTemplate(response.data)
+  summaryElement.innerHTML = movieTemplate(response.data)
 }
 
 // render out the details of a movie
