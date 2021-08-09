@@ -1,6 +1,6 @@
 // a function that can be called multiple different times to create different instances
 // config will have the specifics of how this particular instance should work
-const createAutoComplete = ({ root, renderOption }) => {
+const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) => {
   root.innerHTML = `
     <label><b>Search for a Movie</b></label>
     <input type="text" class="input" />
@@ -39,9 +39,9 @@ const createAutoComplete = ({ root, renderOption }) => {
         // close the dropdown
         dropdown.classList.remove('is-active')
         // to update the value of the input
-        input.value = movie.Title
+        input.value = inputValue(movie)
         // grab individual movie data
-        onMovieSelect(movie)
+        onOptionSelect(movie)
       })
       //! 4) Insert it
       resultsWrapper.appendChild(option)
