@@ -12,7 +12,21 @@ const fetchData = async (searchTerm) => {
 }
 
 const input = document.querySelector('input')
+
+let timeoutId
+const onInput = (e) => {
+  // this will be called many times in a row
+  if (timeoutId) {
+    // first time this is called it will be undefined and skipped over
+    // 2nd time, timeoutId will be defined and timeout cleared
+    clearTimeout(timeoutId)
+  }
+  timeoutId = setTimeout(() => {
+    // setTimeout returns a timer ID
+    // then on further typing we set up a brand new one
+    fetchData(e.target.value)
+  }, 1000) // in 1 second call fetch data
+}
+
 // input event is triggered whenever there is a change in the input
-input.addEventListener('input', (e) => {
-  fetchData(e.target.value)
-})
+input.addEventListener('input', onInput)
